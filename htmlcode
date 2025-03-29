@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MITTAL'S GST CALCULATOR</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+
+        .calculator-container {
+            background-color: #ffffff;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            width: 350px;
+            text-align: center;
+        }
+
+        .calculator-container h2 {
+            margin-bottom: 20px;
+            color: #333;
+        }
+
+        .calculator-container label {
+            font-size: 14px;
+            color: #555;
+            margin: 10px 0 5px;
+            display: block;
+            text-align: left;
+        }
+
+        .calculator-container input[type="number"],
+        .calculator-container select {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 15px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            box-sizing: border-box;
+        }
+
+        .calculator-container button {
+            background-color: #28a745;
+            color: white;
+            border: none;
+            padding: 10px;
+            border-radius: 5px;
+            cursor: pointer;
+            width: 100%;
+            box-sizing: border-box;
+        }
+
+        .calculator-container button:hover {
+            background-color: #218838;
+        }
+
+        .result {
+            margin-top: 20px;
+            text-align: left;
+            font-size: 16px;
+            color: #333;
+        }
+
+        .result p {
+            margin: 5px 0;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="calculator-container">
+        <h2>MITTAL's GST CALCULATOR</h2>
+        
+        <label for="amount">Enter Amount:</label>
+        <input type="number" id="amount" placeholder="Enter amount in INR" required>
+
+        <label for="gst">Select GST Percentage:</label>
+        <select id="gst">
+            <option value="5">5%</option>
+            <option value="12">12%</option>
+            <option value="18">18%</option>
+            <option value="28">28%</option>
+        </select>
+
+        <label for="type">Amount Type:</label>
+        <select id="type">
+            <option value="inclusive">Inclusive of GST</option>
+            <option value="exclusive">Exclusive of GST</option>
+        </select>
+
+        <button onclick="calculateGST()">Calculate GST</button>
+
+        <div class="result">
+            <p id="actualAmount">Actual Amount: â‚¹</p>
+            <p id="gstAmount">GST Amount: â‚¹</p>
+            <p id="totalAmount">Total Amount: â‚¹</p>
+        </div>
+    </div>
+
+    <script>
+        function calculateGST() {
+            const amount = parseFloat(document.getElementById('amount').value);
+            const gstRate = parseFloat(document.getElementById('gst').value) / 100;
+            const type = document.getElementById('type').value;
+
+            let actualAmount, gstAmount, totalAmount;
+
+            if (type === 'inclusive') {
+                gstAmount = amount - (amount / (1 + gstRate));
+                actualAmount = amount - gstAmount;
+                totalAmount = amount;
+            } else {
+                gstAmount = amount * gstRate;
+                actualAmount = amount;
+                totalAmount = amount + gstAmount;
+            }
+
+            document.getElementById('actualAmount').innerText = `Actual Amount: â‚¹${actualAmount.toFixed(2)}`;
+            document.getElementById('gstAmount').innerText = `GST Amount: â‚¹${gstAmount.toFixed(2)}`;
+            document.getElementById('totalAmount').innerText = `Total Amount: â‚¹${totalAmount.toFixed(2)}`;
+        }
+    </script>
+
+</body>
+</html>
